@@ -267,12 +267,12 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
 - (void)diskImageExistsWithKey:(nullable NSString *)key completion:(nullable SDWebImageCheckCacheCompletionBlock)completionBlock {
     dispatch_async(_ioQueue, ^{
-        BOOL exists = [_fileManager fileExistsAtPath:[self defaultCachePathForKey:key]];
+        BOOL exists = [self->_fileManager fileExistsAtPath:[self defaultCachePathForKey:key]];
 
         // fallback because of https://github.com/rs/SDWebImage/pull/976 that added the extension to the disk file name
         // checking the key with and without the extension
         if (!exists) {
-            exists = [_fileManager fileExistsAtPath:[self defaultCachePathForKey:key].stringByDeletingPathExtension];
+            exists = [self->_fileManager fileExistsAtPath:[self defaultCachePathForKey:key].stringByDeletingPathExtension];
         }
 
         if (completionBlock) {
@@ -425,7 +425,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
     if (fromDisk) {
         dispatch_async(self.ioQueue, ^{
-            [_fileManager removeItemAtPath:[self defaultCachePathForKey:key] error:nil];
+            [self->_fileManager removeItemAtPath:[self defaultCachePathForKey:key] error:nil];
             
             if (completion) {
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -465,8 +465,8 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
 - (void)clearDiskOnCompletion:(nullable SDWebImageNoParamsBlock)completion {
     dispatch_async(self.ioQueue, ^{
-        [_fileManager removeItemAtPath:self.diskCachePath error:nil];
-        [_fileManager createDirectoryAtPath:self.diskCachePath
+        [self->_fileManager removeItemAtPath:self.diskCachePath error:nil];
+        [self->_fileManager createDirectoryAtPath:self.diskCachePath
                 withIntermediateDirectories:YES
                                  attributes:nil
                                       error:NULL];
@@ -489,7 +489,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         NSArray<NSString *> *resourceKeys = @[NSURLIsDirectoryKey, NSURLContentModificationDateKey, NSURLTotalFileAllocatedSizeKey];
 
         // This enumerator prefetches useful properties for our cache files.
-        NSDirectoryEnumerator *fileEnumerator = [_fileManager enumeratorAtURL:diskCacheURL
+        NSDirectoryEnumerator *fileEnumerator = [self->_fileManager enumeratorAtURL:diskCacheURL
                                                    includingPropertiesForKeys:resourceKeys
                                                                       options:NSDirectoryEnumerationSkipsHiddenFiles
                                                                  errorHandler:NULL];
@@ -526,7 +526,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         }
         
         for (NSURL *fileURL in urlsToDelete) {
-            [_fileManager removeItemAtURL:fileURL error:nil];
+            [self->_fileManager removeItemAtURL:fileURL error:nil];
         }
 
         // If our remaining disk cache exceeds a configured maximum size, perform a second
@@ -543,7 +543,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
 
             // Delete files until we fall below our desired cache size.
             for (NSURL *fileURL in sortedFiles) {
-                if ([_fileManager removeItemAtURL:fileURL error:nil]) {
+                if ([self->_fileManager removeItemAtURL:fileURL error:nil]) {
                     NSDictionary<NSString *, id> *resourceValues = cacheFiles[fileURL];
                     NSNumber *totalAllocatedSize = resourceValues[NSURLTotalFileAllocatedSizeKey];
                     currentCacheSize -= totalAllocatedSize.unsignedIntegerValue;
@@ -615,7 +615,7 @@ FOUNDATION_STATIC_INLINE NSUInteger SDCacheCostForImage(UIImage *image) {
         NSUInteger fileCount = 0;
         NSUInteger totalSize = 0;
 
-        NSDirectoryEnumerator *fileEnumerator = [_fileManager enumeratorAtURL:diskCacheURL
+        NSDirectoryEnumerator *fileEnumerator = [self->_fileManager enumeratorAtURL:diskCacheURL
                                                    includingPropertiesForKeys:@[NSFileSize]
                                                                       options:NSDirectoryEnumerationSkipsHiddenFiles
                                                                  errorHandler:NULL];
