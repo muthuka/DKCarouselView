@@ -134,7 +134,3 @@ carouselView.defaultImage = [UIImage imageNamed:@"DefaultImage"];
 ## License
 
 This code is distributed under the terms and conditions of the <a href="https://github.com/zhangao0086/DKCarouselView/blob/master/LICENSE">MIT license</a>
-
-## Special Thanks
-
-<a target="_blank" href="https://github.com/jiyee">jiyee</a>
