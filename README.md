@@ -1,24 +1,30 @@
 # DKCarouselView
+
 ## infinite scrolling
+
 ![GIF](https://raw.githubusercontent.com/zhangao0086/DKCarouselView/master/preview.gif)
 
 ## finite scrolling
+
 ![GIF](https://raw.githubusercontent.com/zhangao0086/DKCarouselView/master/preview3.gif)
 
 ## custom view
+
 ![GIF](https://raw.githubusercontent.com/zhangao0086/DKCarouselView/master/preview4.gif)
 
 ## adapting
+
 ![GIF](https://raw.githubusercontent.com/zhangao0086/DKCarouselView/master/preview2.gif)
 
 ## Overview
+
 DKCarouselView is a automatically & circular infinite(or not) scrolling view.The view auto paging/pause can be specified as well. Support also GIFs.
 
 ## How To Get Started
 
 ### Installation with CocoaPods
 
-``` bash
+```bash
 $ pod search DKCarouselView
 
 -> DKCarouselView (1.4.6)
@@ -31,20 +37,21 @@ $ pod search DKCarouselView
 
 Edit your Podfile and add DKCarouselView:
 
-``` bash
-pod 'DKCarouselView', '~> x.x.x'
+```bash
+pod 'DKCarouselView', :git => 'https://github.com/muthuka/DKCarouselView.git'
 ```
 
-Add `#import "DKCarouselView.h"` to the top of classes that will use it.  
-##### Create instances (Also supports xib/storyboard)
+Add `#import "DKCarouselView.h"` to the top of classes that will use it.
 
-```  objective-c
+#### Create instances (Also supports xib/storyboard)
+
+```objective-c
 DKCarouselView *carouselView = [[DKCarouselView alloc] initWithFrame:CGRectMake(0, 0, 320,220)];
 ```
 
 ##### Setup items
 
-```  objective-c
+```objective-c
 NSArray *images = @[@"https://c1.staticflickr.com/9/8428/7855079606_5fc8852562_z.jpg",
                     @"http://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/Parang_mountain_image_1.jpg/640px-Parang_mountain_image_1.jpg",
                     @"http://www.openjpeg.org/samples/Bretagne1.bmp",
@@ -55,7 +62,7 @@ NSMutableArray *items = [NSMutableArray new];
 for (NSString *imageUrl in images) {
     DKCarouselURLItem *urlAD = [DKCarouselURLItem new];
     urlAD.imageUrl = imageUrl;
-    
+
     [items addObject:urlAD];
 }
 [carouselView setItems:items];
@@ -125,7 +132,9 @@ carouselView.defaultImage = [UIImage imageNamed:@"DefaultImage"];
 ```
 
 ## License
+
 This code is distributed under the terms and conditions of the <a href="https://github.com/zhangao0086/DKCarouselView/blob/master/LICENSE">MIT license</a>
 
 ## Special Thanks
+
 <a target="_blank" href="https://github.com/jiyee">jiyee</a>
